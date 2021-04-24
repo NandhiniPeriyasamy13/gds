@@ -1,0 +1,13 @@
+.nav-link .cart-btn {
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-link .cart-items {
+    position: absolute;
+    top: 0px;
+    background: #28a745;
+    padding: 0 5px;
+    border-radius: 30%;
+    color: aliceblue;
+}

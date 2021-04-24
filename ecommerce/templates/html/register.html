@@ -1,0 +1,77 @@
+{% load static %} {% block content %}
+
+<head>
+  <link rel="stylesheet" href="{% static 'assests/signin.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+</head>
+
+<body style="overflow: auto;  max-width: 100%; ">
+  <main>
+      <div></div>
+      <div></div>
+      <div></div>
+    <div class="container" style="width:500px">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="my-auto">
+            <h1 class="login-title" style="color: aliceblue;text-align: center">Jazz Kart</h1>
+            <form action="register" method="post">
+              {% csrf_token %}
+                <div class="field-group">
+                    <span class="fa fa-user" aria-hidden="true"></span>
+                    <div class="wthree-field">
+                        <input name="first_name" placeholder="First Name" type="text" required />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <span class="fa fa-lock" aria-hidden="true"></span>
+                    <div class="wthree-field">
+                        <input name="last_name" placeholder="Last Name" type="text" required />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <span class="fa fa-lock" aria-hidden="true"></span>
+                    <div class="wthree-field">
+                        <input name="username" placeholder="Username" type="text" required />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <span class="fa fa-lock" aria-hidden="true"></span>
+                    <div class="wthree-field">
+                        <input name="email" placeholder="Email" type="text" required />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <span class="fa fa-lock" aria-hidden="true"></span>
+                    <div class="wthree-field">
+                        <input name="password" placeholder="Password" type="text" minlength="8" required />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <span class="fa fa-lock" aria-hidden="true"></span>
+                    <div class="wthree-field">
+                        <input name="password1" placeholder="Confirm Password" type="text" minlength="8" required />
+                    </div>
+                </div>
+                <div class="wthree-field">
+                    <button type="submit" class="btn">Create Account</button>
+                </div>
+{#              <div class="form-group">#}
+{#                <input type="text" name="first_name" class="form-control" placeholder="First Name" required/><br />#}
+{#                <input type="text" name="last_name" class="form-control" placeholder="Last Name" required /><br />#}
+{#                <input type="text" name="username" class="form-control" placeholder="Username" minlength="5"  maxlength="10"required/><br />#}
+{#                <input type="email" name="email" class="form-control" placeholder="Email" required/><br />#}
+{#                <input type="password" name="password" class="form-control" placeholder="Password" minlength="8" required/><br />#}
+{#                <input type="password" name="password1" class="form-control" placeholder="Confirm Password"  minlength="8" required/><br />#}
+{#              </div>#}
+{#              <button type="submit" class="btn btn-block login-btn">Register</button>#}
+            </form>
+            <div><a href="{% url 'signin' %}">Sign In</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+</body>
+{% endblock content %}
