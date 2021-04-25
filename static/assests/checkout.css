@@ -123,6 +123,7 @@ and (min-width :975px) {
     .text-item{
       text-align: center;
       padding: 10px 20px;
+        color: darkgreen;
     }
 
     

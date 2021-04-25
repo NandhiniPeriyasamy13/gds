@@ -124,7 +124,7 @@ def orders(request):
     # Finshed order
     cart = Cart.objects.get(user = request.user, ordered=False)
     new_order  = Order.objects.get(user = request.user, cart=cart )
-    new_order.status = "Pending"
+    new_order.status = "Finished"
     new_order.save()
     cart.ordered = True
     cart.save()
@@ -132,4 +132,10 @@ def orders(request):
     #  The badge on cart
     request.session['key'] = 0
 
-    return HttpResponseRedirect(reverse('homeMain'))
+    return HttpResponseRedirect(reverse('showOrders'))
+
+def showOrders(request):
+    order = Order.objects.filter(user=request.user)
+    context = {'order': order,'empty': False }
+    template = 'orders/orders.html'
+    return render(request, template, context)

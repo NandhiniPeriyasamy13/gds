@@ -26,7 +26,7 @@ SHIPPING_PRICE = (
     (sevenDays_price,sevenDays_price),)
 
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE, )# total price with tax
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)# total price with tax
     subTotal = models.DecimalField(max_digits=1000, decimal_places=2, default=0.00) #  total price without tax
     taxTotal = models.DecimalField(max_digits=1000, decimal_places=2, default=0.09) #  tax price
     finalTotal = models.DecimalField(max_digits=1000, decimal_places=2, default=0.00) #  final total 

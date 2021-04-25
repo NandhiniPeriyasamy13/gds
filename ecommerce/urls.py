@@ -5,7 +5,7 @@ from django.conf.urls import url, include, re_path
 from . import views
 from .views import register, homeMain, about, signin, logout_views, UniqueProduct, search
 from carts.views import cart, update_cart, delete_cart
-from orders.views import checkout, orders, time_shipping
+from orders.views import checkout, orders, time_shipping, showOrders
 from accounts.views import profile
 urlpatterns = [ 
     # first page, before sign in
@@ -39,6 +39,7 @@ urlpatterns = [
 
     # Order of costumers
     path('orders', orders , name='orders'),
+    path('showOrders', showOrders , name='showOrders'),
 
     # the profile of costumer
     path('profile', profile, name='profile'), 
