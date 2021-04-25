@@ -12,28 +12,31 @@ import time
 from django.contrib.auth.models import User
 from orders.views import *
 from carts.views import *
-from accounts.models import * 
+from accounts.models import *
 from accounts.views import *
 
-def add_address(request):
-
-    try: 
+@login_required
+def profile(request):
+    request.session.set_expiry(120000)
+    user = request.user
+    try:
         addressDefault = UserAddress.objects.get(user=request.user)
-        context = { 'address' : addressDefault, }
+        context = {'address': addressDefault}
     except:
         addressDefault = None
-        context={}
-
-
-    # Get the back page
-    try: 
-        next_page = request.GET.get("next")
-    except:
-        next_page= None
-
-
-    # Input the new address
+        context = {}
     if request.method == 'POST':
+        username = request.POST['username']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        user.username = username
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.save()
+
+
         address = request.POST['address']
         city = request.POST['city']
         state = request.POST['state']
@@ -48,41 +51,8 @@ def add_address(request):
             addressDefault.phone_number = phone_number
             addressDefault.save()
             messages.success(request, 'Saved successfully')
-        else: 
-            new_address = UserAddress.objects.create(user=request.user, address=address, city = city, state=state, zipcode=zipcode, phone_number=phone_number)
+        else:
+            new_address = UserAddress.objects.create(user=request.user, address=address, city=city, state=state,
+                                                     zipcode=zipcode, phone_number=phone_number)
             new_address.save()
-
-        # Get back to the page
-        if next_page is not None: 
-            return HttpResponseRedirect(reverse(next_page)) 
-        else: 
-            # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-            return redirect(add_address)
-
-    template = 'accounts/newaddress.html'
-    return render(request, template, context)
-
-@login_required
-def profile(request):
-    request.session.set_expiry(120000)
-    user = request.user
-
-    if request.method == 'POST': 
-        username = request.POST['username']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        if User.objects.filter(username=username).exists():
-                messages.info(request, 'Username Taken')
-                return redirect(add_address)
-
-        else: 
-                user.username = username
-                user.first_name = first_name
-                user.last_name = last_name
-                user.save()
-                messages.success(request, 'Saved successfully')
-                return redirect(add_address)
-
-    return render(request,'accounts/newaddress.html')
-
-
+    return render(request, 'accounts/profile1.html', context)

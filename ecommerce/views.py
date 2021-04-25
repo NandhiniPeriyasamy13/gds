@@ -1,9 +1,8 @@
 from django.contrib.auth import logout, authenticate, login
+from django.http import Http404
 
 from accounts.views import *
-
-# from .forms import ContactForm
-from ecommerce.models import Contact,User,Product,ProductImage
+from ecommerce.models import User,Product,ProductImage
 from carts.models import Cart
 from django.core.paginator import Paginator
 
@@ -17,7 +16,7 @@ def homeMain(request):
     if chooseCategory:
         product_list = Product.objects.filter(category = chooseCategory)
     else :
-        product_list = Product.objects.all()
+        product_list = Product.objects.get_queryset().order_by('id')
 
     paginator = Paginator(product_list, 12)
 
@@ -67,7 +66,7 @@ def signin(request):
             messages.info(request, 'Invalid credentials')
             return redirect('signin')
     else:
-        return render(request, 'html/signin.html', {'title': 'Sign in'})
+        return render(request, 'html/login.html', {'title': 'Sign in'})
 
 # Logout function
 # should set name function is different than logout unless the recusion problem happens.
@@ -85,23 +84,19 @@ def register(request):
         last_name = request.POST['last_name']
         email = request.POST['email']
         password = request.POST['password']
-        password1 = request.POST['password1']
-        if password == password1:
-            if User.objects.filter(username=username).exists():
-                messages.info(request, 'Username Taken')
-            elif User.objects.filter(email=email).exists():
-                messages.info(request, 'Email Taken')
-            else:
-                user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
-                                                password=password, email=email)
-                user.save()
-                messages.success(request, f'Account created {user.username}!')
-                return redirect('signin')
+        if User.objects.filter(username=username).exists():
+            messages.info(request, 'Username Taken')
+        elif User.objects.filter(email=email).exists():
+            messages.info(request, 'Email Taken')
         else:
-            messages.error(request, 'Does not match password')
+            user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+                                                password=password, email=email)
+            user.save()
+            messages.success(request, f'Account created {user.username}!')
+            return redirect('signin')
     # else:
     #     form = UserCreationForm()
-    return render(request, 'html/register.html')
+    return render(request, 'html/login.html')
 
 # for a specific product
 # @login_required
@@ -119,28 +114,5 @@ def UniqueProduct(request,slug):
         raise Http404("Does not exist")
 
 
-def contact(request): 
-    request.session.set_expiry(120000)
-    try:
-        user = request.user
-        context = { 'user':user, }
-    except: 
-        pass
-    
-    if request.method == 'POST':
-        firstName = request.POST['firstName']
-        lastName = request.POST['lastName']
-        email = request.POST['email']
-        if request.user.is_authenticated: 
-            contact = Contact.objects.create( user=request.user, firstName=firstName, lastName=lastName,email=email)
-            contact.save()
-        else:
-            contact = Contact.objects.create(firstName=firstName, lastName=lastName,email=email)
-            contact.save()
-        messages.info(request, "Your feedback / questions has sent")
-        return redirect('add_address')
-
-    template = 'accounts/newaddress.html'
-    return render(request, template, context)
 
 

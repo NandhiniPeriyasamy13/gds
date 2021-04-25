@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductImage, Contact
+from .models import Product, ProductImage
 
 
 # This page to upload the database on admin site
@@ -32,21 +32,10 @@ class ImageProductAdmin(admin.ModelAdmin):
     class Meta:
         model = ProductImage
 
-class ContactAdmin(admin.ModelAdmin): 
-    list_display = ['__str__','email','solved_status', 'timestamp']
-    readonly_fields = ['email','firstName', 'lastName', 'timestamp','message'] 
-    list_editable = ['solved_status'] 
-    search_fields = ['solved_status', 'email', 'user']
-    list_filter = ['solved_status']
-
-     # show only, cant fix variables
-    class Meta:
-        model = Product
 
 # Add the database Product to admin
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ImageProductAdmin)
-admin.site.register(Contact, ContactAdmin)
 
 
     

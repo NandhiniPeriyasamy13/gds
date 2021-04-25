@@ -1,0 +1,114 @@
+{% load static %} {% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'assests/login.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+            var urlParams = window.location.pathname;
+            console.log(window.location.pathname);
+            if(urlParams.includes('register')){
+                $('#user_options-forms').addClass('bounceLeft')
+            }
+        });
+    </script>
+</head>
+<body>
+<section class="user">
+    <div class="user_options-container">
+        <div class="user_options-text">
+            <div class="user_options-unregistered">
+                <h2 class="user_unregistered-title">Organika Grocers</h2>
+                <p class="user_unregistered-text">Already have an acount? Login here to fetch fresh and organic products to
+                    your door!!</p>
+                <button class="user_unregistered-signup" id="signup-button">Sign up</button>
+            </div>
+
+            <div class="user_options-registered">
+                <h2 class="user_registered-title">Organika Grocers</h2>
+                <p class="user_registered-text">Don't have an account? Sign up here to fetch fresh and organic products to
+                    your door!!</p>
+                <button class="user_registered-login" id="login-button">Login</button>
+            </div>
+        </div>
+
+        <div class="user_options-forms" id="user_options-forms">
+            <div class="user_forms-login">
+                <h2 class="forms_title">Login</h2>
+                <form class="forms_form" method="post" action="signin">
+                    {% csrf_token %}
+                    <fieldset class="forms_fieldset">
+                        <div class="forms_field">
+                            <input name="username" placeholder="Username" type="text" class="forms_field-input" required
+                                   autofocus/>
+                        </div>
+                        <div class="forms_field">
+                            <input name="password" placeholder="Password" type="password" class="forms_field-input"
+                                   required/>
+                        </div>
+                    </fieldset>
+                    <div class="forms_buttons">
+                        <input type="submit" class="forms_buttons-action">
+                    </div>
+                </form>
+            </div>
+            <div class="user_forms-signup">
+                <h2 class="forms_title">Sign Up</h2>
+                <form action="register" method="post" class="forms_form">
+                    {% csrf_token %}
+                    <fieldset class="forms_fieldset">
+                        <div class="forms_field">
+                            <input name="first_name" placeholder="First Name" type="text" class="forms_field-input"
+                                   required/>
+                        </div>
+                        <div class="forms_field">
+                            <input type="text" name="last_name" placeholder="Last Name" class="forms_field-input"
+                                   required/>
+                        </div>
+                        <div class="forms_field">
+                            <input type="email" name="email" placeholder="Email" class="forms_field-input"
+                                   required/>
+                        </div>
+                        <div class="forms_field">
+                            <input type="text" name="username" placeholder="Username" class="forms_field-input"
+                                   required/>
+                        </div>
+                        <div class="forms_field">
+                            <input type="text" name="password" placeholder="Password" minlength="8" class="forms_field-input" required/>
+                        </div>
+                    </fieldset>
+                    <div class="forms_buttons">
+                        <input type="submit" value="Sign up" class="forms_buttons-action">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+
+    const signupButton = document.getElementById('signup-button'),
+        loginButton = document.getElementById('login-button'),
+        userForms = document.getElementById('user_options-forms')
+
+    /**
+     * Add event listener to the "Sign Up" button
+     */
+    signupButton.addEventListener('click', () => {
+        userForms.classList.remove('bounceRight')
+        userForms.classList.add('bounceLeft')
+    }, false)
+
+    /**
+     * Add event listener to the "Login" button
+     */
+    loginButton.addEventListener('click', () => {
+        userForms.classList.remove('bounceLeft')
+        userForms.classList.add('bounceRight')
+    }, false)
+
+
+</script>
+</body>
+
+{% csrf_token %}
+{% endblock content %}

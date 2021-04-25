@@ -492,3 +492,10 @@
     padding: 10px 10px;
   }
 }
+
+.empty-cart {
+  width: 50vw;
+  text-align: center;
+  font-family: 'Maison Neue' ;
+  font-weight: 300;
+}

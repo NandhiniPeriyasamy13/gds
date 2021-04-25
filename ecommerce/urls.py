@@ -3,10 +3,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url, include, re_path
 from . import views
-from .views import register, homeMain, about, signin, logout_views, UniqueProduct, search, contact
+from .views import register, homeMain, about, signin, logout_views, UniqueProduct, search
 from carts.views import cart, update_cart, delete_cart
 from orders.views import checkout, orders, time_shipping
-from accounts.views import add_address, profile
+from accounts.views import profile
 urlpatterns = [ 
     # first page, before sign in
     # path('', home, name='home'),
@@ -19,11 +19,6 @@ urlpatterns = [
     path('register', register, name='register'),
     # to log out
     path("logout", logout_views, name="logout"),
-    #to contact us
-    path("contact",contact, name="contact"),
-    # To change or add address
-    path('add_address', add_address, name="add_address"), 
-
     # this link is to display product after log in
     # This link is for searching, s for search
     url(r'^s/$',search, name='search'),
@@ -34,11 +29,11 @@ urlpatterns = [
     # To show unique product
     path('<slug:slug>UniqueProduct', UniqueProduct , name='product'),
     # To show cart
-    path('yourCart', cart, name='cart'),
+    path('cart', cart, name='cart'),
     # To change the cart
-    url(r'^yourCart/(?P<slug>[\w-]+)/$',update_cart, name='update_cart'),
+    url(r'^cart/(?P<slug>[\w-]+)/$',update_cart, name='update_cart'),
     # To remove item
-    url(r'^yourCart/delete/(?P<slug>[\w-]+)/$',delete_cart, name='delete_cart'),
+    url(r'^cart/delete/(?P<slug>[\w-]+)/$',delete_cart, name='delete_cart'),
     # To checkout
     path('checkout', checkout , name='checkout'),
 

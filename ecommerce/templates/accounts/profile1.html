@@ -1,0 +1,105 @@
+{% extends 'html/nav.html' %} {% block content %}
+{% if user.is_authenticated %}
+<body>
+<div class="container">
+    <div class="row gutters">
+        <div class="card h-100">
+            <div class="card-body">
+                <form action="{% url 'profile' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <h6 class="mb-2 text-primary">Personal Details</h6>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="firstname">First Name</label>
+                                <input type="text" class="form-control" id="firstname" name="first_name"
+                                       value="{{ user.first_name }}" placeholder="First name">
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="lastname">Last Name</label>
+                                <input type="text" class="form-control" id="lastname" name="last_name"
+                                       value="{{ user.last_name }}"
+                                       placeholder="Last name">
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" name="username" id="username"
+                                       value="{{ user.username }}"
+                                       placeholder="username" readonly>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="eMail">Email</label>
+                                <input type="email" class="form-control" name="email" id="eMail" value="{{user.email}}"
+                                       placeholder="Enter email ID">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gutters">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <h6 class="mt-3 mb-2 text-primary">Address</h6>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="Street">Street</label>
+                                <input type="text" class="form-control" id="Street" name='address'
+                                       placeholder='Your address' value='{{address.address}}'>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="ciTy">City</label>
+                                <input type="text" class="form-control" id="ciTy" name='city' placeholder='Your City'
+                                       value='{{ address.city }}'>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="sTate">State</label>
+                                <input type="text" class="form-control" id="sTate" name='state'
+                                       placeholder='Your State' value='{{ address.state }}'>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="zIp">Zip Code</label>
+                                <input type="text" class="form-control" id="zIp" name="zipcode" inputmode="numeric"
+                                       pattern="^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$"
+                                       placeholder="Your ZipCode" value='{{ address.zipcode }}'>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="phone">Phone number</label>
+                                <input type="text" class="form-control" id="phone" name="phone_number"
+                                       pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                       placeholder="999-999-9999"
+                                       value='{{ address.phone_number }}'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gutters">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="text-right">
+                                <input type="submit"
+                                       class="btn btn-success"
+                                       value='Update'></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{% endif %}
+{% endblock content %}

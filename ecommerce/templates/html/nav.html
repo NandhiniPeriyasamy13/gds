@@ -64,7 +64,7 @@
                     {#                        {% if not request.session.key %}0{% else %}{{ request.session.key }}{% endif %} ]</a>#}
                 </li>
                 <li class="nav-item ml-4">
-                    <a class="nav-link" href="{% url 'add_address' %}"><i class="fa fa-user mr-1"></i>Profile</a>
+                    <a class="nav-link" href="{% url 'profile' %}"><i class="fa fa-user mr-1"></i>Profile</a>
                 </li>
             {% endif %}
             <li class="nav-item ml-4">
@@ -84,11 +84,16 @@
                             <button type='submit' name='category' value="Detergents" class="dropdown-item">Detergents
                             </button>
                         </form>
-                    </div>
+                    </div></div>
             </li>
             <li class="nav-item ml-4">
                 <a class="nav-link" href="{% url 'about' %}"><i class="fa fa-user mr-1"></i>About</a>
             </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item ml-4">
+                <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>Logout</a>
+            </li>
+            {% endif %}
         </ul>
         <form class="form-inline my-2 my-lg-0" action='/s/'>
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='search'>
